@@ -1,95 +1,117 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  Input,
+  Button,
+  VStack,
+  HStack,
+  Heading,
+  Text,
+  Grid,
+} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [search, setSearch] = useState("");
+  const [pokemonList, setPokemonList] = useState<
+    { name: string; url: string }[]
+  >([]);
+  const [filteredPokemon, setFilteredPokemon] = useState<
+    { name: string; url: string }[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+  // Fetch all Pokémon when the page loads
+  useEffect(() => {
+    async function fetchAllData() {
+      try {
+        const response = await fetch(
+          `https://pokeapi.co/api/v2/pokemon?limit=100`
+        );
+        const data = await response.json();
+        setPokemonList(data.results);
+        setFilteredPokemon(data.results); // Initialize filtered list
+      } catch (error) {
+        console.error("Error fetching Pokémon:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAllData();
+  }, []);
+
+  // Handle search and redirect to dynamic page
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!search.trim()) return;
+    router.push(`/page/${search.toLowerCase()}`); // Navigate to Pokémon details
+  };
+
+  // Filter Pokémon list as user types
+  const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    const filtered = pokemonList.filter((pokemon) =>
+      pokemon.name.includes(value)
+    );
+    setFilteredPokemon(filtered);
+  };
+
+  return (
+    <VStack spacing={4} p={5}>
+      <Heading fontSize={"2xl"} textAlign={"center"} m={4}>
+        Search Pokémon
+      </Heading>
+
+      {/* Search Box */}
+      <form onSubmit={handleSearch}>
+        <HStack>
+          <Input
+            placeholder="Search Pokémon..."
+            value={search}
+            onChange={handleFilter}
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <Button type="submit" colorScheme="blue">
+            Search
+          </Button>
+        </HStack>
+      </form>
+
+      {/* Loading State */}
+      {loading ? (
+        <Text>Loading Pokémon...</Text>
+      ) : (
+        <Grid gap={5} templateColumns="repeat(5, 1fr)">
+          {filteredPokemon.map((pokemon, index) => (
+            <HStack
+              key={index}
+              justify="space-between"
+              w="100%"
+              mt={4}
+              border="1px solid black"
+              boxShadow="md"
+              p={10}
+              flexDirection={'column'}
+              borderRadius="md"
+            >
+              <Text>{pokemon.name}</Text>
+              <Button
+                colorScheme="teal"
+                size="sm"
+                onClick={() => {
+                  const pokemonId = pokemon.url.split("/").slice(-2, -1)[0]; 
+                  router.push(`/pages/pokemon/${pokemonId}`);
+                }}
+              >
+                View
+              </Button>
+            </HStack>
+          ))}
+        </Grid>
+      )}
+    </VStack>
   );
 }
