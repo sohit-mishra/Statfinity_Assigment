@@ -32,7 +32,7 @@ export default function Home() {
         );
         const data = await response.json();
         setPokemonList(data.results);
-        setFilteredPokemon(data.results); 
+        setFilteredPokemon(data.results);
       } catch (error) {
         console.error("Error fetching Pokémon:", error);
       } finally {
@@ -46,7 +46,7 @@ export default function Home() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!search.trim()) return;
-    router.push(`/page/${search.toLowerCase()}`); 
+    router.push(`/page/${search.toLowerCase()}`);
   };
 
   const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +64,6 @@ export default function Home() {
         Search Pokémon
       </Heading>
 
-      
       <form onSubmit={handleSearch}>
         <HStack>
           <Input
@@ -78,11 +77,19 @@ export default function Home() {
         </HStack>
       </form>
 
-     
       {loading ? (
         <Text>Loading Pokémon...</Text>
       ) : (
-        <Grid gap={5} templateColumns="repeat(5, 1fr)">
+        <Grid
+          gap={5}
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+            xl: "repeat(5, 1fr)",
+          }}
+        >
           {filteredPokemon.map((pokemon, index) => (
             <HStack
               key={index}
@@ -92,7 +99,7 @@ export default function Home() {
               border="1px solid black"
               boxShadow="md"
               p={10}
-              flexDirection={'column'}
+              flexDirection={"column"}
               borderRadius="md"
             >
               <Text>{pokemon.name}</Text>
@@ -100,7 +107,7 @@ export default function Home() {
                 colorScheme="teal"
                 size="sm"
                 onClick={() => {
-                  const pokemonId = pokemon.url.split("/").slice(-2, -1)[0]; 
+                  const pokemonId = pokemon.url.split("/").slice(-2, -1)[0];
                   router.push(`/pages/pokemon/${pokemonId}`);
                 }}
               >

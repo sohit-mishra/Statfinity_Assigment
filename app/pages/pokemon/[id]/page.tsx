@@ -52,19 +52,37 @@ const PokemonDetail = () => {
     .filter(([_, value]) => value) // Remove null or undefined images
     .map(([key, value]) => ({
       name: key.replace(/_/g, " "), // Replace underscores with spaces for readability
-      url: typeof value === "string" ? value : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/back/4.png", // Fallback image
+      url:
+        typeof value === "string"
+          ? value
+          : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/back/4.png", // Fallback image
     }));
 
   return (
     <Box p={6}>
-      {/* Abilities Section */}
+
       <Box mb={4}>
-        <Text fontSize="xl" fontWeight="bold">Abilities</Text>
-        <Grid gap={2} gridTemplateColumns="repeat(4, 1fr)">
+        <Text fontSize="xl" fontWeight="bold">
+          Abilities
+        </Text>
+        <Grid
+          gap={2}
+          templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }}
+        >
           {abilities.map((ability, index) => (
             <Box key={index} p={2} borderWidth={1} borderRadius="md" mb={2}>
               <Text fontWeight="medium">Name: {ability.ability.name}</Text>
-              <Text>URL: <Link href={ability.ability.url} target="_blank" rel="noopener noreferrer" color="blue.500">{ability.ability.url}</Link></Text>
+              <Text>
+                URL:{" "}
+                <Link
+                  href={ability.ability.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  color="blue.500"
+                >
+                  {ability.ability.url}
+                </Link>
+              </Text>
               <Text>Is Hidden: {ability.is_hidden ? "Yes" : "No"}</Text>
               <Text>Slot: {ability.slot}</Text>
             </Box>
@@ -72,41 +90,83 @@ const PokemonDetail = () => {
         </Grid>
       </Box>
 
-      {/* Type Section */}
+  
       <Box mb={4}>
-        <Text fontSize="xl" fontWeight="bold">Type</Text>
-        <Grid gap={2} gridTemplateColumns="repeat(4, 1fr)">
+        <Text fontSize="xl" fontWeight="bold">
+          Type
+        </Text>
+        <Grid
+          gap={2}
+          templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }}
+        >
           {types.map((type, index) => (
             <Box key={index} p={2} borderWidth={1} borderRadius="md" mb={2}>
               <Text fontWeight="medium">Name: {type.type.name}</Text>
-              <Text>URL: <Link href={type.type.url} target="_blank" rel="noopener noreferrer" color="blue.500">{type.type.url}</Link></Text>
+              <Text>
+                URL:{" "}
+                <Link
+                  href={type.type.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  color="blue.500"
+                >
+                  {type.type.url}
+                </Link>
+              </Text>
               <Text>Slot: {type.slot}</Text>
             </Box>
           ))}
         </Grid>
       </Box>
 
-      {/* Stats Section */}
+   
       <Box mb={4}>
-        <Text fontSize="xl" fontWeight="bold">Stats</Text>
-        <Grid gap={2} gridTemplateColumns="repeat(3, 1fr)">
+        <Text fontSize="xl" fontWeight="bold">
+          Stats
+        </Text>
+        <Grid
+          gap={2}
+          templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }}
+        >
           {stats.map((stat, index) => (
             <Box key={index} p={3} borderWidth={1} borderRadius="md" mb={2}>
               <Text fontWeight="medium">Name: {stat.stat.name}</Text>
               <Text>Base Stat: {stat.base_stat}</Text>
               <Text>Effort: {stat.effort}</Text>
-              <Text>URL: <Link href={stat.stat.url} target="_blank" rel="noopener noreferrer" color="blue.500">{stat.stat.url}</Link></Text>
+              <Text>
+                URL:{" "}
+                <Link
+                  href={stat.stat.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  color="blue.500"
+                >
+                  {stat.stat.url}
+                </Link>
+              </Text>
             </Box>
           ))}
         </Grid>
       </Box>
 
-      {/* Images Section */}
+    
       <Box mb={4}>
-        <Text fontSize="xl" fontWeight="bold">Images</Text>
-        <Grid gap={2} gridTemplateColumns="repeat(3, 1fr)">
+        <Text fontSize="xl" fontWeight="bold">
+          Images
+        </Text>
+        <Grid
+          gap={2}
+          templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }}
+        >
           {imagesArray.map((img, index) => (
-            <Box key={index} p={3} borderWidth={1} borderRadius="md" mb={2} textAlign="center">
+            <Box
+              key={index}
+              p={3}
+              borderWidth={1}
+              borderRadius="md"
+              mb={2}
+              textAlign="center"
+            >
               <Text fontWeight="medium">{img.name}</Text>
               <Image src={img.url} alt={img.name} boxSize="100px" />
             </Box>
@@ -114,22 +174,32 @@ const PokemonDetail = () => {
         </Grid>
       </Box>
 
-      {/* Moves Section (Fixed `<a>` inside `<a>` issue) */}
+      
       <Box mb={4}>
-        <Text fontSize="xl" fontWeight="bold">Moves</Text>
-        <Grid gap={2} gridTemplateColumns="repeat(3, 1fr)">
+        <Text fontSize="xl" fontWeight="bold">
+          Moves
+        </Text>
+        <Grid
+          gap={2}
+          templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)", xl: "repeat(4, 1fr)" }}
+        >
           {moves.map((moveData, index) => (
             <Box key={index} p={3} borderWidth={1} borderRadius="md" mb={2}>
               <Text fontWeight="medium">Move: {moveData.move.name}</Text>
               <Link href={moveData.move.url} legacyBehavior>
-                <a target="_blank" rel="noopener noreferrer" style={{ color: "blue" }}>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "blue" }}
+                >
                   {moveData.move.url}
                 </a>
               </Link>
             </Box>
           ))}
         </Grid>
-      </Box>
+      </Box> 
+
     </Box>
   );
 };
