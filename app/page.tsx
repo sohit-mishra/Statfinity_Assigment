@@ -32,7 +32,7 @@ export default function Home() {
         );
         const data = await response.json();
         setPokemonList(data.results);
-        setFilteredPokemon(data.results); // Initialize filtered list
+        setFilteredPokemon(data.results); 
       } catch (error) {
         console.error("Error fetching Pokémon:", error);
       } finally {
@@ -43,14 +43,12 @@ export default function Home() {
     fetchAllData();
   }, []);
 
-  // Handle search and redirect to dynamic page
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!search.trim()) return;
-    router.push(`/page/${search.toLowerCase()}`); // Navigate to Pokémon details
+    router.push(`/page/${search.toLowerCase()}`); 
   };
 
-  // Filter Pokémon list as user types
   const handleFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.toLowerCase();
     setSearch(value);
@@ -66,7 +64,7 @@ export default function Home() {
         Search Pokémon
       </Heading>
 
-      {/* Search Box */}
+      
       <form onSubmit={handleSearch}>
         <HStack>
           <Input
@@ -80,7 +78,7 @@ export default function Home() {
         </HStack>
       </form>
 
-      {/* Loading State */}
+     
       {loading ? (
         <Text>Loading Pokémon...</Text>
       ) : (

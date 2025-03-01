@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokémon Explorer
 
-## Getting Started
+A Next.js-based Pokémon Explorer app that allows users to browse Pokémon, search for specific ones, and view detailed stats. This project uses **Next.js**, **Chakra UI**, and **PokeAPI**.
 
-First, run the development server:
+## 🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### ✅ Homepage
+- Displays a list of Pokémon fetched from the **PokeAPI**.
+- Implements a **search bar** to filter Pokémon by name.
+- Styled using **Chakra UI** or **TailwindCSS**.
+
+### ✅ Pokémon Detail Page
+- Clicking on a Pokémon navigates to a **detailed page** with:
+  - Image
+  - Abilities
+  - Type
+  - Stats
+  - Moves
+
+### ✅ Routing
+- Uses **Next.js Dynamic Routes** (`pages/pokemon/[id].tsx`) for Pokémon details.
+
+### ✅ Performance Optimization (Optional)
+- Supports **Server-Side Rendering (SSR)** or **Static Site Generation (SSG)** for improved performance.
+
+---
+
+## 🛠️ **Tech Stack**
+- **Framework:** Next.js (React)
+- **Language:** TypeScript
+- **Styling:** Chakra UI 
+- **API:** PokeAPI (https://pokeapi.co/)
+- **Routing:** Next.js Dynamic Routing
+
+---
+
+## 📥 **Installation & Setup**
+
+### 1. **Clone the repository**
+```sh
+git clone https://github.com/sohit-mishra/Statfinity_Assigment.git
+cd pokemon-explorer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. **Install dependencies**
+```sh
+npm install  # or yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. **Run the development server**
+```sh
+npm run dev  # or yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📌 **How It Works**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **Homepage (`index.tsx`)**
+- Fetches Pokémon from PokeAPI.
+- Displays them in a grid.
+- Includes a search bar for filtering.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **Detail Page (`pages/pokemon/[id].tsx`)**
+- Fetches individual Pokémon details.
+- Displays image, abilities, type, stats, and moves.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🏆 Enjoy exploring Pokémon! 🎉
