@@ -3,7 +3,8 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Box, Image, Text, Spinner, Grid } from "@chakra-ui/react";
+import NextImage from "next/image"; 
+import { Box, Text, Spinner, Grid } from "@chakra-ui/react";
 
 const PokemonDetail = () => {
   const { id } = useParams(); // Get Pokémon ID from URL
@@ -47,16 +48,14 @@ const PokemonDetail = () => {
     );
   }
 
-  // Convert image data to array, filter null values, and provide a fallback
-  const imagesArray = Object.entries(imageData || {})
-    .filter(([_, value]) => value) // Remove null or undefined images
-    .map(([key, value]) => ({
-      name: key.replace(/_/g, " "), // Replace underscores with spaces for readability
-      url:
-        typeof value === "string"
-          ? value
-          : "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/back/4.png", // Fallback image
-    }));
+ 
+  const imagesArray = Object.entries(imageData ?? {}) 
+  .filter(([, url]) => typeof url === "string" && url.trim() !== "") 
+  .map(([key, url]) => ({
+    name: key.replace(/_/g, " "), 
+    url: url || "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-ii/crystal/back/4.png",
+  }));
+
 
   return (
     <Box p={6}>
@@ -168,7 +167,7 @@ const PokemonDetail = () => {
               textAlign="center"
             >
               <Text fontWeight="medium">{img.name}</Text>
-              <Image src={img.url} alt={img.name} boxSize="100px" />
+              <NextImage src={String(img.url)} alt={img.name} width={100} height={100} />
             </Box>
           ))}
         </Grid>
